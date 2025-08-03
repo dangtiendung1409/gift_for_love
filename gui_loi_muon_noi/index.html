@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="bday.png" />
+    <title>Gởi bạn nhỏ của anh ♡</title>
+    <link rel="icon" href="https://i.ibb.co.com/hXZsYxZ/heart.png" />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background-color: #fff0f5;
+        color: #ff69b4;
+        font-family: "Poppins", sans-serif;
+        overflow: auto;
+      }
+
+      .page {
+        min-height: 100vh;
+        height: auto;
+        width: 100vw;
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 20px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 1s ease;
+      }
+
+      .page.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      h1 {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+      }
+
+      h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+      }
+
+      .highlight {
+        color: #ff1493;
+        font-weight: bold;
+      }
+
+      .button {
+        background-color: #ff69b4;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        margin-top: 30px;
+        transition: background 0.3s;
+      }
+
+      .button:hover {
+        background-color: #ff1493;
+      }
+
+      img {
+        max-width: 70vw;
+        max-height: 50vh;
+        margin-bottom: 20px;
+      }
+
+      .letter {
+        white-space: pre-line;
+        font-size: 1.1rem;
+        max-width: 600px;
+        text-align: left;
+        border-left: 3px solid #ff69b4;
+        padding-left: 15px;
+        min-height: 200px;
+      }
+
+      .falling {
+        position: fixed;
+        top: -30px;
+        font-size: 24px;
+        animation: fall linear infinite;
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      .pink-heart {
+        color: #ff69b4;
+      }
+
+      .yellow-star {
+        color: #facc15;
+      }
+
+      .music-control {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        font-size: 30px;
+        cursor: pointer;
+        z-index: 9999;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(120vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 1.8rem;
+        }
+
+        h2 {
+          font-size: 1.5rem;
+        }
+
+        .button {
+          padding: 10px 20px;
+          font-size: 1rem;
+        }
+
+        .letter {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page active" id="page1">
+      <img
+        src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdGp4YnM2aHZyenh6d3VjOGpjOWV2bnoydjczdnFsbGpweDZoeTdudyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/wNk71OcVtOPncxNHVT/giphy.gif"
+        alt="Cute Icon"
+      />
+      <h1 style="font-family: 'Dancing Script', cursive">
+        Chào người đẹp<span class="highlight"> Thu Hương</span>
+      </h1>
+      <p>Nay anh có đôi lời muốn gởi đến bạn nhỏ của anh ✨</p>
+      <button class="button" onclick="goToPage(2)">Mở ‹𝟹</button>
+    </div>
+
+    <div class="page" id="page2">
+      <img
+        src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnFjdnZsZ2Q2YWlqM2sxcnk0d2h4cXR3aW91M2NwdXJsemMyaG1mbCZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/1hoKkBNSBxVyHIsPer/giphy.gif"
+        alt="Envelope"
+      />
+      <p style="font-family: 'Dancing Script', cursive">
+        Mong em mở và nghe hết tâm tư của anh
+      </p>
+      <button class="button" onclick="goToPage(3)">Mở ‹𝟹</button>
+    </div>
+
+    <div class="page" id="page3" style="font-family: 'Dancing Script', cursive">
+      <h2>My dear baby <𝟑 .ᐟ</h2>
+      <div class="letter" id="letterText"></div>
+    </div>
+
+    <div id="main-content"></div>
+
+    <script>
+      // Nội dung 3 khối page đã mã hóa base64
+      const encoded =
+        "PGRpdiBjbGFzcz0icGFnZSBhY3RpdmUiIGlkPSJwYWdlMSI+PGltZyBzcmM9Imh0dHBzOi8vbWVkaWEzLmdpcGh5LmNvbS9tZWRpYS92MS5ZMmxrUFRjNU1HSU5qZXB4WWJuTWZ6ZW5oNnR3VmpPR2pqT1dWbm95ZHZjM3ZzYk1wZVp5NGRZbXh6zEdWeU1tRnlaV1Z6Y3pvd2NHRnVaMlZ6ZEhKaGJtTnZaR2x1WnlvPS93Tms3MU9jVnRPUG5jeE5IVlQvZ2lwaHkuZ2lmIiBhbHQ9IkN1dGUgSWNvbiIgLz48aDEgc3R5bGU9ImZvbnQtZmFtaWx5OiAnRGFuY2luZyBTY3JpcHQnLCBjdXJzaXZlOyI+Q2hh̀byBuZ8aw4budaSDEkeG7gyBWdeG7lCBMaW5oPC9zcGFuPjwvaDE+PHA+TmF5IGFuaCBj4bqjIGRvaSBs4bubaSBtdeG7mW4gZ8aw4budaSDEkeG7gyBk4buLYyBi4bqjbiBuaOG7hyBjdWEgYW5oIOKcqTwvcD48YnV0dG9uIGNsYXNzPSJidXR0b24iIG9uY2xpY2s9ImdvVG9QYWdlKDIpIj5N4bubaCDigJw8L2J1dHRvbj48L2Rpdj4K..."; // rút gọn
+
+      document.getElementById("main-content").innerHTML = atob(encoded);
+    </script>
+
+    <audio id="bg-music" src="only.mp3" autoplay loop muted></audio>
+    <audio
+      id="click-sound"
+      src="https://public.youware.com/users-website-assets/prod/50390417-3924-48fa-b7cc-21adb627e36e/256113_3263906-lq.mp3"
+      preload="auto"
+    ></audio>
+    <div class="music-control" id="musicControl">🔇</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+      const fullLetter = `
+Gửi đến em – người con gái anh yêu nhất ♡
+
+Anh chúc cho em luôn có thật nhiều sức khỏe, sống một cuộc đời dài lâu và luôn bình yên. Dù là ngày hôm nay hay bất kỳ ngày nào khác, anh cũng luôn mong những điều tốt đẹp nhất sẽ đến với em – những nụ cười nhẹ nhàng, những phút giây an yên, và một trái tim luôn tràn đầy yêu thương.
+
+Em là người duy nhất mà anh đã yêu một cách chân thành và cuồng nhiệt đến thế. Không có em, cuộc sống của anh sẽ trở nên trống rỗng và vô nghĩa. Được nắm tay em đi hết cuộc đời là điều duy nhất anh thật lòng mong ước.
+
+Anh mong em sẽ có thật nhiều kỷ niệm đẹp bên những người yêu thương em. Anh cũng hy vọng những tia nắng nhẹ nhàng sẽ âm thầm thì thầm cho em câu trả lời đúng trong những lần em phân vân, và giúp em đưa ra những quyết định đúng đắn trong từng bước đi của cuộc sống.
+
+Anh ước những ngày hạnh phúc của em sẽ dài như một bộ truyện bất tận, còn những ngày buồn sẽ trôi qua nhanh như một cái chớp mắt.
+
+Anh mong em luôn tìm thấy những điều mới mẻ – những nơi em chưa từng đến, những đam mê em chưa từng khám phá, những niềm vui em chưa từng trải nghiệm. Và chúng sẽ trở thành một phần trong cuộc sống của em, mang đến hạnh phúc lâu dài.
+
+Và... nếu một ngày nào đó em tình cờ nhặt được một tờ vé số trúng một triệu đô, thì hãy nhớ ngay đến anh đầu tiên nhé! (Không thì vài trăm cũng được… hehe.)
+
+Em chính là người làm cho thế giới của anh trở nên trọn vẹn.  
+Anh chỉ mong em mãi ở bên anh – không phải vì anh cần một ai đó, mà vì anh cần chính em.
+
+Với tất cả tình yêu,  
+Người đàn ông yêu em mãi mãi
+`;
+
+      // Play click sound function
+      function playClickSound() {
+        const clickSound = document.getElementById("click-sound");
+        clickSound.currentTime = 0;
+        clickSound.play().catch((e) => console.log("Audio play failed:", e));
+      }
+
+      // Add click sound to all buttons and clickable elements
+      document.addEventListener("DOMContentLoaded", function () {
+        const clickableElements = document.querySelectorAll(
+          "button, .music-control"
+        );
+        clickableElements.forEach((element) => {
+          element.addEventListener("click", playClickSound);
+        });
+      });
+
+      function goToPage(pageNum) {
+        const pages = document.querySelectorAll(".page");
+        pages.forEach((p) => p.classList.remove("active"));
+        const next = document.getElementById(`page${pageNum}`);
+        next.classList.add("active");
+
+        if (pageNum === 3) {
+          const music = document.getElementById("bg-music");
+          music.muted = false;
+          music.play().catch((e) => console.log("Autoplay blocked:", e));
+          document.getElementById("musicControl").textContent = "🔊";
+
+          confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+          typeText(fullLetter, document.getElementById("letterText"), 25);
+          startFallingSymbols();
+        }
+      }
+
+      function typeText(text, element, speed) {
+        element.innerHTML = "";
+        let i = 0;
+        function type() {
+          if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+          }
+        }
+        type();
+      }
+
+      function startFallingSymbols() {
+        setInterval(() => {
+          const el = document.createElement("div");
+          el.classList.add("falling");
+          const isHeart = Math.random() < 0.5;
+          el.innerText = isHeart ? "💕" : "⭐";
+          el.classList.add(isHeart ? "pink-heart" : "yellow-star");
+          el.style.left = Math.random() * 100 + "vw";
+          el.style.animationDuration = 3 + Math.random() * 2 + "s";
+          document.body.appendChild(el);
+          setTimeout(() => el.remove(), 6000);
+        }, 300);
+      }
+
+      // Music control
+      const musicControl = document.getElementById("musicControl");
+      const bgMusic = document.getElementById("bg-music");
+      let isMuted = true;
+
+      musicControl.addEventListener("click", function () {
+        if (isMuted) {
+          bgMusic.muted = false;
+          bgMusic.play().catch((e) => console.log("Autoplay blocked:", e));
+          musicControl.textContent = "🔊";
+          isMuted = false;
+        } else {
+          bgMusic.muted = true;
+          musicControl.textContent = "🔇";
+          isMuted = true;
+        }
+      });
+    </script>
+    <script>
+      // Ngăn F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, chuột phải
+      document.addEventListener("keydown", function (e) {
+        if (
+          e.key === "F12" ||
+          (e.ctrlKey &&
+            e.shiftKey &&
+            (e.key.toLowerCase() === "i" || e.key.toLowerCase() === "j")) ||
+          (e.ctrlKey && e.key.toLowerCase() === "u")
+        ) {
+          e.preventDefault();
+          return false;
+        }
+      });
+      document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+      });
+    </script>
+  </body>
+</html>
