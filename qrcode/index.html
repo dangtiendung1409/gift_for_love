@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart QR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Gluten:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/styles.css">
+    <style></style>
+</head>
+
+<body>
+
+    <div id="leftPanel">
+        <!-- Tiêu đề -->
+        <h2>Tạo QR code</h2>
+
+        <!-- Nhập nội dung cho QR code -->
+        <label for="qrInput">Nội dung QR:</label>
+        <input id="qrInput" placeholder="Nhập nội dung QR..." />
+
+        <!-- Thông báo lỗi -->
+        <small id="errorText">Vui lòng nhập nội dung để tạo QR code!</small>
+
+        <!-- Chọn màu cho QR -->
+        <div class="color-picker-container">
+            <label for="colorPicker">Chọn màu:</label><br>
+            <input type="color" id="colorPicker" value="#e74c3c" />
+        </div>
+
+        <!-- Checkbox chọn sử dụng ảnh nền hay không -->
+        <label>
+            <input type="checkbox" id="useBackground" />
+            Dùng ảnh nền có sẵn
+        </label>
+
+        <!-- Chọn màu nền nếu không dùng ảnh nền -->
+        <div class="color-picker-container">
+            <label for="bgColorPicker">Màu nền:</label><br>
+            <input type="color" id="bgColorPicker" value="#ffffff" />
+        </div>
+
+        <div class="button-group">
+            <!-- Nút tạo QR khi click -->
+            <button onclick="draw()">Tạo QR</button>
+            <!-- Nút tải ảnh QR -->
+            <button id="downloadBtn" onclick="downloadCanvas()" style="display: none;">Tải ảnh</button>
+        </div>
+    </div>
+
+    <div id="rightPanel">
+        <!-- Canvas dùng vẽ QR -->
+        <canvas id="heartCanvas" width="512" height="512"></canvas>
+
+        <footer>
+            &copy; 2025 Panbap. A personal creation..
+        </footer>
+    </div>
+
+    <script src="./assets/qrcode.js"></script>
+    <script src="./assets/script.js"></script>
+
+</body>
+
+</html>

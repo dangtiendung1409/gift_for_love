@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nhớ anh</title>
+
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body id="playButton" translate="no">
+  <canvas width="393" height="596"></canvas>
+  <h1 id="anh">Nhớ anh, người em thương</h1>
+  <audio id="audioPlayer" src="./SY.mp3"></audio> 
+  <script>
+    const playButton = document.getElementById("playButton");
+    const audioPlayer = document.getElementById("audioPlayer");
+
+    playButton.addEventListener("click", function() {
+        audioPlayer.play();
+    });
+</script>
+  <script src="./script2.js"></script>
+
+</body>
+
+</html>
