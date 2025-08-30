@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đếm ngày yêu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body onclick="playAudio()">
+    <canvas id="c" width="948" height="586"></canvas>
+    <div id="wrapper">
+        <h1>Đếm ngày yêu</h1>
+
+        <div id="info">
+            <div class="one">
+                <img src="https://i.pinimg.com/originals/c6/7f/d9/c67fd9080d3b0a28c508b50492078abf.gif" class="avt">
+                <p>Love me</p>
+            </div>
+            <div id="heart">
+                ❤
+                <date>0</date>
+                <b>Ngày rùi nè..</b>
+            </div>
+            <div class="two">
+                <img src="https://img2.thuthuatphanmem.vn/uploads/2018/12/31/hinh-dong-dang-yeu-va-dep_112054848.gif"
+                    class="avt">
+                <p>Love you</p>
+            </div>
+        </div>
+
+        <div id="clock-box">
+            <div id="clock">
+                <div class="time-container">
+                    <div class="time-part" id="hours">00</div>:
+                    <div class="time-part" id="minutes">00</div>:
+                    <div class="time-part" id="seconds">00</div>
+                </div>
+            </div>
+        </div>
+
+        <a href="./page2.html" id="link-to-album">
+            <button>Ảnh chúng mình</button>
+        </a>
+
+        <audio id="myAudio">
+            <source src="./ST.mp3" type="audio/mp3">
+            Trình duyệt của bạn không hỗ trợ thẻ audio.
+        </audio>
+
+    </div>
+    <script src="./script.js"></script>
+
+</body>
+
+</html>

@@ -2,148 +2,118 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Website rainlove - nơi chia sẻ tình yêu thương.">
-  <title>Nhập lời chúc</title>
-  <link rel="icon" href="https://github.com/Panbap/anh/blob/main/icon1.png?raw=true" type="image/png">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Panbap/fonts@new/fonts.css">
-  <link rel="stylesheet" href="./assets/styles.css">
-  <script src="https://cdn.jsdelivr.net/gh/Panbap/js/file/cry.min.js"></script>
-  <script src="./assets/qrcode.min.js"></script>
-  <style>
-    #loading-screen {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      font-size: 24px;
-      color: #555;
-      flex-direction: column;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Website Lovely - nơi chia sẻ tình yêu thương.">
+    <title>Nhập lời chúc</title>
+    <link rel="icon" href="https://github.com/Panbap/anh/blob/main/icon1.png?raw=true" type="image/png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Panbap/fonts@new/fonts.css">
+    <script src="https://cdn.jsdelivr.net/gh/Panbap/js/file/cry.min.js"></script>
+    <style>
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-size: 24px;
+            color: #555;
+            flex-direction: column;
+        }
 
-    .spinner {
-      border: 8px solid #f3f3f3;
-      border-top: 8px solid #ff7094;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1.2s linear infinite;
-      margin-bottom: 15px;
-    }
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #ff7094;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1.2s linear infinite;
+            margin-bottom: 15px;
+        }
 
-    @keyframes spin {
-      0% {
-        transform: rotate(0deg);
-      }
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
 
-      100% {
-        transform: rotate(360deg);
-      }
-    }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
-    .loading-text::after {
-      content: '';
-      display: inline-block;
-      animation: dots 1.5s steps(3, end) infinite;
-    }
+        .loading-text::after {
+            content: '';
+            display: inline-block;
+            animation: dots 1.5s steps(3, end) infinite;
+        }
 
-    @keyframes dots {
+        @keyframes dots {
 
-      0%,
-      20% {
-        content: '';
-      }
+            0%,
+            20% {
+                content: '';
+            }
 
-      40% {
-        content: '.';
-      }
+            40% {
+                content: '.';
+            }
 
-      60% {
-        content: '..';
-      }
+            60% {
+                content: '..';
+            }
 
-      80%,
-      100% {
-        content: '...';
-      }
-    }
-  </style>
+            80%,
+            100% {
+                content: '...';
+            }
+        }
+    </style>
 </head>
 
 <body>
-  <div id="loading-screen">
-    <div class="spinner"></div>
-    <div id="loading-text">Loading</div>
-  </div>
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <div id="loading-text">Loading</div>
+    </div>
+    <canvas id="rainCanvas"></canvas>
+    <div class="wrapper">
+        <div class="container">
+            <h2>Viết Lời Chúc Đặc Biệt</h2>
+            <form id="wishForm">
+                <p class="note">
+                    <strong>Hướng dẫn:</strong> Nhập lời chúc, dùng <code>|</code> để phân tách từ, dùng
+                    <code>#countdown số</code> để đếm ngược, <code>#time</code> để hiển thị thời gian.
+                </p>
+                <textarea id="message" rows="6"
+                    cols="50">Happy|Birthday|To|You|Chúc|Cậu luôn|Vui vẻ|Hạnh phúc|Yêu đời|#time|❤</textarea>
+                <button type="submit">Tạo link</button>
+            </form>
+            <div id="created-link"></div>
 
-  <div class="container">
-    <h1>Tạo lời chúc</h1>
+            <div id="donateBox" style="display:none; text-align:center; margin-top: 20px;">
+                <p><strong>Ủng hộ tác giả 💖</strong></p>
+                <p>Sự ủng hộ của các bạn là động lực lớn giúp mình không ngừng sáng tạo và ra mắt nhiều sản phẩm mới.
+                    Cảm ơn các bạn rất nhiều!</p>
+                <img src="https://github.com/Panbap/anh/blob/main/qr1.png?raw=true" alt="QR Code Donate"
+                    style="max-width: 200px;" />
+                <p id="countdownText">Đang tạo link...</p>
+            </div>
 
-    <label for="message">Nhập lời chúc:</label>
-    <small><strong>Hướng dẫn:</strong> Nhập lời chúc, dùng <code>|</code> để phân tách từ</small>
-    <textarea id="message" placeholder="Mỗi dòng là 1 hiệu ứng...">Chúc mừng|sinh nhật|bạn yêu|❤</textarea>
-
-    <label class="select-group" for="gif">Ảnh GIF (chọn sẵn):</label>
-    <select id="gif" onchange="toggleCustomImageInput()">
-      <option value="">Không chọn</option>
-      <option value="./assets/h1.gif">Happy Birthday</option>
-      <option value="./assets/h2.gif">Happy Birthday1</option>
-      <option value="./assets/h3.gif">Happy Birthday2</option>
-      <option value="./assets/i1.gif">I love you1</option>
-      <option value="./assets/i2.gif">I love you2</option>
-      <option value="./assets/m1.gif">I miss you</option>
-      <option value="./assets/1.gif">Hi</option>
-    </select>
-
-    <div id="customImageGroup">
-      <label for="customImage">Hoặc dán link ảnh của bạn:</label>
-      <input type="text" id="customImage" placeholder="VD: https://devpan.com/your.jpg" />
-      <div class="optional-note">Nếu bạn chọn ảnh GIF, ô này sẽ bị bỏ qua.</div>
+        </div>
     </div>
 
-    <div id="gifPreview" class="gif-preview" style="display:none; text-align:center; margin-top:15px;">
-      <p>Ảnh bạn đã chọn:</p>
-      <img id="gifImage" alt="GIF Preview" class="gif-image"
-        style="max-width: 50%; border-radius: 8px; box-shadow: 0 0 8px #ff66aa99;" />
-    </div>
-
-    <label for="music">Chọn nhạc nền:</label>
-    <select id="music">
-      <option value="">Không có nhạc</option>
-      <option value="./assets/1.mp3">Happy Birthday</option>
-      <option value="./assets/2.mp3">Đàn cá gỗ</option>
-      <option value="./assets/3.mp3">Lễ đường</option>
-      <option value="./assets/4.mp3">Từng Ngày Yêu Em</option>
-    </select>
-
-    <button class="generate-btn" onclick="generateLink()">Tạo Link</button>
-
-    <div id="donateBox" style="display: none;" class="donate-box">
-      <p>Ủng hộ tác giả ❤️</p>
-      <img src="https://github.com/Panbap/anh/blob/main/qr1.png?raw=true" alt="Mã QR Donate" class="qr-image" />
-      <!-- <img src="./assets/heart1.png" alt="Mã QR Donate" class="qr-image" /> -->
-    </div>
-
-    <div id="linkOutput"></div>
-
-    <div id="qrBox">
-      <div id="qrcode" style="display: inline-block;"></div>
-    </div>
-    <button id="downloadQRButton" onclick="downloadQRWithBackground()" class="generate-btn" style="display: none;">Tải
-      mã QR</button>
-  </div>
-
-  <script src="./assets/script.js"></script>
-  <script>
-    const _0x138a06=_0x1b84;function _0x238c(){const _0xa4af65=['footer','695779KSzsRm','158626IQUDjc','decrypt','main-content','load','9KZOCcY','693848rXDGlL','none','Loading','appendChild','enc','addEventListener','textContent','124572OEkrCw','517IvyuFn','JQbXuQOuEtTf0SntLPY2iWSJ','getElementById','46380EZEgDE','contextmenu','12Iomnyc','repeat','1117615NryRwE','toString','block','loading-screen','display','style','4ULigek','1887uCidgF','Utf8','body','loading-text','createElement'];_0x238c=function(){return _0xa4af65;};return _0x238c();}(function(_0x165972,_0x45271e){const _0x46ecfb=_0x1b84,_0x1adc59=_0x165972();while(!![]){try{const _0x5dd7cc=-parseInt(_0x46ecfb(0x154))/0x1+-parseInt(_0x46ecfb(0x16a))/0x2+parseInt(_0x46ecfb(0x163))/0x3*(-parseInt(_0x46ecfb(0x162))/0x4)+parseInt(_0x46ecfb(0x15c))/0x5+parseInt(_0x46ecfb(0x15a))/0x6*(-parseInt(_0x46ecfb(0x169))/0x7)+parseInt(_0x46ecfb(0x16f))/0x8*(parseInt(_0x46ecfb(0x16e))/0x9)+-parseInt(_0x46ecfb(0x158))/0xa*(-parseInt(_0x46ecfb(0x155))/0xb);if(_0x5dd7cc===_0x45271e)break;else _0x1adc59['push'](_0x1adc59['shift']());}catch(_0x20bbcc){_0x1adc59['push'](_0x1adc59['shift']());}}}(_0x238c,0x1e804));const loadingText=document[_0x138a06(0x157)](_0x138a06(0x166));let dots=0x0;const loadingInterval=setInterval(()=>{const _0x44afeb=_0x138a06;dots=(dots+0x1)%0x4,loadingText['textContent']=_0x44afeb(0x171)+'.'[_0x44afeb(0x15b)](dots);},0xfa);window['addEventListener'](_0x138a06(0x16d),()=>{setTimeout(()=>{const _0x4a9354=_0x1b84;clearInterval(loadingInterval),document[_0x4a9354(0x157)](_0x4a9354(0x15f))[_0x4a9354(0x161)][_0x4a9354(0x160)]=_0x4a9354(0x170),document[_0x4a9354(0x157)](_0x4a9354(0x16c))[_0x4a9354(0x161)][_0x4a9354(0x160)]=_0x4a9354(0x15e);},0x1f4);});const footer=document[_0x138a06(0x167)](_0x138a06(0x168)),paragraph=document[_0x138a06(0x167)]('p');paragraph[_0x138a06(0x153)]='©\x202025\x20DevPan.\x20A\x20personal\x20creation.',footer['appendChild'](paragraph),document[_0x138a06(0x165)][_0x138a06(0x172)](footer),window[_0x138a06(0x152)](_0x138a06(0x159),_0x25ab2e=>{_0x25ab2e['preventDefault']();});function _0x1b84(_0x3407ca,_0x5b3a6e){const _0x238c7b=_0x238c();return _0x1b84=function(_0x1b84bf,_0xf693ae){_0x1b84bf=_0x1b84bf-0x152;let _0x121e7a=_0x238c7b[_0x1b84bf];return _0x121e7a;},_0x1b84(_0x3407ca,_0x5b3a6e);}const pd=_0x138a06(0x156),ded=CryptoJS['AES'][_0x138a06(0x16b)](ende,pd)[_0x138a06(0x15d)](CryptoJS[_0x138a06(0x173)][_0x138a06(0x164)]);ded&&eval(ded);
-  </script>
+    <footer>
+        <p>© 2025 DevPan. A personal creation.</p>
+    </footer>
+    <script src="./assets/input.js"></script>
+    <script>
+        const _0x4a405c=_0xb66a;(function(_0x3d43f6,_0x249120){const _0x20a442=_0xb66a,_0x5b27e9=_0x3d43f6();while(!![]){try{const _0x30407a=-parseInt(_0x20a442(0x170))/0x1*(parseInt(_0x20a442(0x176))/0x2)+parseInt(_0x20a442(0x167))/0x3+-parseInt(_0x20a442(0x166))/0x4+parseInt(_0x20a442(0x16f))/0x5*(-parseInt(_0x20a442(0x16b))/0x6)+-parseInt(_0x20a442(0x16c))/0x7+parseInt(_0x20a442(0x174))/0x8+parseInt(_0x20a442(0x16e))/0x9*(parseInt(_0x20a442(0x175))/0xa);if(_0x30407a===_0x249120)break;else _0x5b27e9['push'](_0x5b27e9['shift']());}catch(_0x52e1ab){_0x5b27e9['push'](_0x5b27e9['shift']());}}}(_0x2112,0xdbc0c));function _0x2112(){const _0x2bf4fc=['addEventListener','enc','6baWpHF','2235443FLpJHG','main-content','207wuiwcJ','6613070tBfLiH','1499702bbzkEG','AES','block','style','6147312ozHYas','1537280uAwpLK','2mIJQMh','display','getElementById','loading-text','load','Loading','4664620dqwIQG','2711310lsXfTr','textContent'];_0x2112=function(){return _0x2bf4fc;};return _0x2112();}function _0xb66a(_0x48e7e7,_0xe63a20){const _0x2112d3=_0x2112();return _0xb66a=function(_0xb66a06,_0x5b4c25){_0xb66a06=_0xb66a06-0x164;let _0x41cd70=_0x2112d3[_0xb66a06];return _0x41cd70;},_0xb66a(_0x48e7e7,_0xe63a20);}const loadingText=document[_0x4a405c(0x178)](_0x4a405c(0x179));let dots=0x0;const loadingInterval=setInterval(()=>{const _0x50d1df=_0x4a405c;dots=(dots+0x1)%0x4,loadingText[_0x50d1df(0x168)]=_0x50d1df(0x165)+'.'['repeat'](dots);},0xfa);window[_0x4a405c(0x169)](_0x4a405c(0x164),()=>{setTimeout(()=>{const _0x3511a5=_0xb66a;clearInterval(loadingInterval),document[_0x3511a5(0x178)]('loading-screen')['style'][_0x3511a5(0x177)]='none',document[_0x3511a5(0x178)](_0x3511a5(0x16d))[_0x3511a5(0x173)]['display']=_0x3511a5(0x172);},0x1f4);});const pd='N7CSUUXH20jiAU307fhlHUkV',dd=CryptoJS[_0x4a405c(0x171)]['decrypt'](ende,pd)['toString'](CryptoJS[_0x4a405c(0x16a)]['Utf8']);dd&&eval(dd);
+    </script>
 </body>
 
 </html>
